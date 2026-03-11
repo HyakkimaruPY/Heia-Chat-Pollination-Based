@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Heia</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/key-screen.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/topbar.css">
+  <link rel="stylesheet" href="css/chat.css">
+  <link rel="stylesheet" href="css/input.css">
+  <link rel="stylesheet" href="css/modals.css">
+  <link rel="stylesheet" href="css/utilities.css">
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+
+<!-- ── Key Screen ────────────────────────────────────── -->
+<div id="key-screen">
+  <canvas id="key-honeycomb"></canvas>
+  <div class="key-card">
+    <div class="key-logo">
+      <div class="key-logo-mark">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg>
+      </div>
+      <div class="key-logo-text">
+        <div class="key-logo-name">Heia</div>
+        <div class="key-logo-sub">
+          <span id="txt-key-pollen-built" style="color:var(--text3);font-size:11px">with</span>
+          <span style="color:rgba(255,140,30,.9);font-weight:600;font-size:11px">Pollinations.ai</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h2 id="txt-welcome">Bem-vindo</h2>
+      <p id="txt-welcome-desc" style="margin-top:6px">Insira sua chave pública para começar. Suas conversas ficam salvas localmente.</p>
+    </div>
+    <div class="field-wrap">
+      <input type="password" id="key-input" placeholder="pk_..." autocomplete="off" spellcheck="false">
+      <button class="vis-btn" onclick="UI.togglePasswordVis('key-input')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+    </div>
+    <div class="key-error" id="key-error"><span id="txt-key-error">Chave inválida. Verifique e tente novamente.</span></div>
+    <button class="btn-primary" id="key-submit" onclick="Keys.handleSubmit()">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      <span id="txt-enter">Entrar</span>
+    </button>
+    <p style="font-size:12.5px;color:var(--text3);text-align:center"><span id="txt-get-key">Obtenha sua chave em</span> <a href="https://enter.pollinations.ai" target="_blank">enter.pollinations.ai</a></p>
+    <div class="key-pollinations-credit">
+      <a href="https://pollinations.ai" target="_blank" class="pollinations-badge-link">
+        <svg width="18" height="18" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0">
+          <rect x="7" y="0" width="1" height="2" fill="#1a1a1a"/><rect x="12" y="0" width="1" height="2" fill="#1a1a1a"/>
+          <rect x="6" y="0" width="2" height="1" fill="#1a1a1a"/><rect x="12" y="0" width="2" height="1" fill="#1a1a1a"/>
+          <rect x="7" y="3" width="6" height="4" fill="#f5c518"/>
+          <rect x="8" y="4" width="1" height="2" fill="#1a1a1a"/><rect x="11" y="4" width="1" height="2" fill="#1a1a1a"/>
+          <rect x="1" y="7" width="5" height="4" fill="#b8d9f8" opacity=".8"/>
+          <rect x="14" y="7" width="5" height="4" fill="#b8d9f8" opacity=".8"/>
+          <rect x="2" y="11" width="4" height="3" fill="#b8d9f8" opacity=".6"/>
+          <rect x="14" y="11" width="4" height="3" fill="#b8d9f8" opacity=".6"/>
+          <rect x="6" y="7" width="8" height="2" fill="#f5c518"/>
+          <rect x="6" y="9" width="8" height="2" fill="#1a1a1a"/>
+          <rect x="6" y="11" width="8" height="2" fill="#f5c518"/>
+          <rect x="6" y="13" width="8" height="2" fill="#1a1a1a"/>
+          <rect x="6" y="15" width="8" height="2" fill="#f5c518"/>
+          <rect x="7" y="17" width="6" height="2" fill="#1a1a1a"/>
+          <rect x="9" y="19" width="2" height="3" fill="#1a1a1a"/>
+        </svg>
+        <span id="txt-key-pollen-built2">Feito com</span>
+        <span style="font-weight:600;color:rgba(255,140,30,.95);letter-spacing:.02em">Pollinations.ai</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ── Expired Key Banner ─────────────────────────────── -->
+<div id="expired-banner">
+  <div class="exp-card">
+    <div class="exp-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+    <h2 id="txt-expired-title">Chave Expirada</h2>
+    <p id="txt-expired-desc">Sua chave expirou ou é inválida. Insira uma nova chave pública.</p>
+    <div class="field-wrap" style="width:100%">
+      <input type="password" id="renew-key-input" placeholder="pk_..." autocomplete="off" spellcheck="false">
+      <button class="vis-btn" onclick="UI.togglePasswordVis('renew-key-input')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+    </div>
+    <button class="btn-primary" onclick="Keys.handleRenew()" id="renew-submit"><span id="txt-renew">Renovar Chave</span></button>
+  </div>
+</div>
+
+<!-- ── Mobile Sidebar Overlay ────────────────────────── -->
+<div id="sb-overlay" onclick="closeSidebar()"></div>
+
+<!-- ── App Shell ─────────────────────────────────────── -->
+<div id="app">
+
+  <!-- Sidebar -->
+  <aside id="sidebar">
+    <div class="sb-head">
+      <div class="sb-logo">
+        <div class="sb-logo-mark"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3"/></svg></div>
+        <span class="sb-logo-name">Heia</span>
+      </div>
+      <button class="btn-new" onclick="Chat.create()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        <span id="txt-new-chat">Novo Chat</span>
+      </button>
+    </div>
+    <div class="sb-section" id="txt-chats-label">Conversas</div>
+    <div class="chat-list" id="chat-list"></div>
+    <div class="sb-bottom">
+      <button class="sb-btn" onclick="UI.openModal('memory')">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>
+        <span id="txt-memory">Memória</span>
+        <span id="mem-badge" class="sb-badge" style="display:none">0</span>
+      </button>
+      <button class="sb-btn" onclick="UI.openModal('help')">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <span id="txt-help">Ajuda</span>
+      </button>
+      <button class="sb-btn" onclick="UI.openModal('settings')">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        <span id="txt-settings">Configurações</span>
+      </button>
+      <div class="sb-pollinations-credit">
+        <a href="https://pollinations.ai" target="_blank" class="sb-pollen-link">
+          <img src="https://raw.githubusercontent.com/pollinations/pollinations/main/assets/logo.svg" alt="Pollinations.ai" height="15" class="sb-pollen-logo">
+          <div class="sb-pollen-text">
+            <span id="sb-pollen-built" class="sb-pollen-built">Feito com</span>
+            <span class="sb-pollen-name">Pollinations.ai</span>
+          </div>
+          <svg style="margin-left:auto;flex-shrink:0;opacity:.35" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <main id="main">
+    <canvas id="chat-honeycomb"></canvas>
+
+    <!-- Topbar -->
+    <div id="topbar">
+      <div class="tb-left">
+        <button class="tb-toggle" onclick="toggleSidebar()" id="sb-toggle-btn">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <span class="tb-title" id="chat-title">Chat</span>
+      </div>
+      <div class="tb-right">
+        <button class="brain-btn" id="brain-btn" onclick="UI.openModal('memory')">
+          <div class="mem-dot"></div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>
+        </button>
+        <button class="model-pill" id="model-pill-btn" onclick="UI.openModal('model')" title="">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h6M3 15h6"/></svg>
+          <span id="model-pill-label">nova-fast</span>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="opacity:.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <button class="icon-btn" onclick="Theme.toggle()" id="theme-btn">
+          <svg id="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg id="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Chat Area -->
+    <div id="chat-area">
+      <div class="messages-inner" id="messages"></div>
+    </div>
+
+    <!-- Input Area -->
+    <div id="input-area">
+      <button id="scroll-btn" onclick="UI.scrollToBottom(true)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        <span id="txt-scroll-down">Ir para o fim</span>
+      </button>
+      <div id="stream-status">
+        <div class="stream-dot"></div>
+        <span id="stream-status-text">Gerando resposta…</span>
+      </div>
+      <div class="input-wrap">
+        <textarea id="msg-input" rows="1" placeholder="Mensagem..." onkeydown="UI.handleInputKey(event)" oninput="UI.autoResize(this)"></textarea>
+        <div style="display:flex;align-items:center;gap:4px;flex-shrink:0">
+          <button class="send-btn" id="send-btn" onclick="Chat.send()">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+          <button class="stop-btn" id="stop-btn" onclick="Chat.stopGeneration()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="input-hint" id="txt-input-hint">as respostas podem conter erros</div>
+      <div class="input-pollinations-credit">
+        <a href="https://pollinations.ai" target="_blank" class="input-pollen-link">
+          <img src="https://raw.githubusercontent.com/pollinations/pollinations/main/assets/logo.svg" alt="Pollinations.ai" height="11" class="input-pollen-logo">
+          <span id="txt-input-pollen-built">Powered by</span> <span style="font-weight:600">Pollinations.ai</span>
+        </a>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ── Modals ─────────────────────────────────────────── -->
+<div class="modal-overlay" id="settings-modal">
+  <div class="modal">
+    <div class="modal-hd">
+      <span class="modal-title" id="txt-settings-title">Configurações</span>
+      <button class="icon-btn" onclick="UI.closeModal('settings-modal')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="modal-tabs">
+      <button class="modal-tab active" id="tab-keys" onclick="Modals.switchTab('keys')"><span id="txt-tab-keys">Chaves</span></button>
+      <button class="modal-tab" id="tab-appearance" onclick="Modals.switchTab('appearance')"><span id="txt-tab-appearance">Aparência</span></button>
+    </div>
+    <div class="modal-body" id="settings-body"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="memory-modal">
+  <div class="modal">
+    <div class="modal-hd">
+      <span class="modal-title" id="txt-memory-title">Memória</span>
+      <button class="icon-btn" onclick="UI.closeModal('memory-modal')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="modal-body" id="memory-body"></div>
+    <div class="modal-footer">
+      <button class="btn-sm danger" onclick="Memory.clear()" id="txt-clear-memory">Limpar Tudo</button>
+      <button class="btn-sm ghost" onclick="UI.closeModal('memory-modal')" id="txt-close">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<div class="modal-overlay" id="help-modal">
+  <div class="modal">
+    <div class="modal-hd">
+      <span class="modal-title" id="txt-help-title">Central de Ajuda</span>
+      <button class="icon-btn" onclick="UI.closeModal('help-modal')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="modal-body" id="help-body"></div>
+    <div class="modal-footer">
+      <button class="btn-sm ghost" onclick="UI.closeModal('help-modal')" id="txt-help-close">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="model-modal">
+  <div class="modal" style="max-width:420px">
+    <div class="modal-hd">
+      <span class="modal-title" id="txt-model-picker-title">Modelo</span>
+      <button class="icon-btn" onclick="UI.closeModal('model-modal')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="modal-body" id="model-body"></div>
+  </div>
+</div>
+
+<!-- ── JavaScript (load order matters) ───────────────── -->
+<script src="js/config.js"></script>
+<script src="js/state.js"></script>
+<script src="js/i18n-strings.js"></script>
+<script src="js/store-theme-account.js"></script>
+<script src="js/api.js"></script>
+<script src="js/renderer.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/chat.js"></script>
+<script src="js/memory.js"></script>
+<script src="js/modals.js"></script>
+<script src="js/keys.js"></script>
+<script src="js/canvas.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
