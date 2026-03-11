@@ -2,7 +2,7 @@
 
 <img src="https://raw.githubusercontent.com/pollinations/pollinations/main/assets/logo.svg" width="100" alt="Pollinations.AI" />
 
-# 🌸 HEIA
+# 🌸 HEIA - By Sr. Hell
 
 **A clean, fast AI chat with persistent memory — powered by Pollinations.AI**
 
